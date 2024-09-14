@@ -797,7 +797,7 @@ You can use the fields below to configure the VHD or VHDX that you want to creat
         function
         Get-WindowsBuildNumber
         {
-            $os = Get-WmiObject -Class Win32_OperatingSystem
+            $os = Get-CimInstance Win32_OperatingSystem
             return [int]($os.BuildNumber)
         }
 
@@ -1845,7 +1845,7 @@ You can use the fields below to configure the VHD or VHDX that you want to creat
                 }
                 else
                 {
-                    [Microsoft.Dism.Commands.BasicImageInfoObject[]]$filteredImages = $WindowsImages | Where-Object {$_.ImageName -ilike "*$($Edition)*"}
+                    [Microsoft.Dism.Commands.BasicImageInfoObject[]]$filteredImages = $WindowsImages | Where-Object {$_.ImageName -eq $Edition}
 
                     if ($null -ne $filteredImages)
                     {
@@ -4130,5 +4130,5 @@ Add-WindowsImageTypes
         }
 "@
 
-    Add-Type -TypeDefinition $code -ReferencedAssemblies "System.Xml","System.Linq","System.Xml.Linq" -ErrorAction SilentlyContinue
+    Add-Type -TypeDefinition $code #-ErrorAction SilentlyContinue
 }
